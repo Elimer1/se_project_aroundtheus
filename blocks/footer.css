@@ -9,6 +9,7 @@
 }
 .footer__copyright {
   padding: 67px 0px 60px 0px;
+  margin: 0;
   font-family: "Inter", "Arial", sans-serif;
   font-size: 18px;
   font-weight: 400;
@@ -16,7 +17,7 @@
 }
 @media screen and (max-width: 800px) {
   .footer {
-    max-width: fit-content;
+    max-width: 282px;
   }
   .footer__copyright {
     font-size: 16px;
@@ -25,9 +26,6 @@
 }
 
 @media screen and (max-width: 680px) {
-  .footer {
-    max-width: fit-content;
-  }
   .footer__copyright {
     font-size: 14px;
     line-height: 17px;
