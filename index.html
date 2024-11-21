@@ -25,7 +25,11 @@
           />
           <div class="profile__info">
             <h1 class="profile__title">Jacques Cousteau</h1>
-            <button type="button" class="profile__edit-button"></button>
+            <button
+              type="button"
+              id="profile__edit-button"
+              class="profile__edit-button"
+            ></button>
             <p class="profile__description">Explorer</p>
           </div>
           <button type="button" class="profile__add-button"></button>
@@ -105,9 +109,13 @@
         <p class="footer__copyright">© 2022 Around The U.S.</p>
       </footer>
     </div>
-    <div class="modal">
+    <div id="profile__edit-modal" class="modal">
       <div class="modal__container">
-        <button type="button" class="modal__close"></button>
+        <button
+          type="button"
+          class="modal__close"
+          id="modal__close-button"
+        ></button>
         <p class="modal__heading">Edit Profile</p>
         <form class="modal__form">
           <input
