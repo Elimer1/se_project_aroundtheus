@@ -16,6 +16,7 @@
           alt="Around The U.S logo"
         />
       </header>
+
       <main class="content">
         <section class="profile page__section">
           <img
@@ -44,6 +45,8 @@
         <p class="footer__copyright">© 2022 Around The U.S.</p>
       </footer>
     </div>
+
+    <!--Edit Modal-->
     <div id="profile__edit-modal" class="modal">
       <div class="modal__container">
         <button
@@ -52,17 +55,17 @@
           id="modal__close-button"
         ></button>
         <p class="modal__heading">Edit Profile</p>
-        <form class="modal__form">
+        <form class="modal__form" id="edit-profile-form">
           <input
             type="text"
-            name="title"
+            name="edit-profile"
             class="modal__input"
             id="profile__title__input"
             placeholder="Jacques Cousteau"
           />
           <input
             type="text"
-            name="description"
+            name="profile-description"
             class="modal__input"
             id="profile__description__input"
             placeholder="Explorer"
@@ -78,12 +81,55 @@
       </div>
     </div>
 
+    <!--Add Modal-->
+    <div id="add-card-modal" class="modal">
+      <div class="modal__container">
+        <button
+          type="button"
+          class="modal__close"
+          id="modal__close-button"
+        ></button>
+        <p class="modal__heading">New Place</p>
+        <form class="modal__form" id="add-card-form">
+          <input
+            type="text"
+            name="title"
+            class="modal__input modal__input__type__title"
+            id="add-card-title-input"
+            placeholder="Title"
+          />
+          <input
+            type="text"
+            name="url"
+            class="modal__input modal__input__type__url"
+            id="add-card-url-input"
+            placeholder="Image URL"
+          />
+          <button
+            type="submit"
+            class="modal__save-button"
+            id="modal__save-button"
+          >
+            Save
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="image__modal">
+      <div class="image__modal-content">
+        <img src="" alt="" class="modal__image" />
+        <button type="button" class="modal__close"></button>
+      </div>
+    </div>
+
     <template id="card-template">
       <li class="card">
         <img src="" alt="" class="card__image" />
         <div class="card__description">
           <h2 class="card__title"></h2>
           <button type="button" class="card__like-button"></button>
+          <button type="button" class="card__delete-button"></button>
         </div>
       </li>
     </template>
