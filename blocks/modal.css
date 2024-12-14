@@ -1,5 +1,5 @@
 .modal {
-  display: none;
+  display: flex;
   align-items: center;
   justify-content: center;
   position: fixed;
@@ -10,9 +10,13 @@
   background-color: rgba(0, 0, 0, 0.5);
   z-index: 999;
   padding: 0 19px;
+  opacity: 0;
+  visibility: hidden;
+  transition: visibility 0.3s, opacity 0.3s linear;
 }
 .modal_opened {
-  display: flex;
+  visibility: visible;
+  opacity: 1;
 }
 .modal__container {
   display: flex;
@@ -99,10 +103,6 @@
 }
 .modal__input:last-of-type {
   margin-bottom: 48px;
-}
-
-.modal__image-container_opened {
-  display: flex;
 }
 
 .modal__image-content {

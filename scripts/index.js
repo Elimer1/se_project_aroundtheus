@@ -96,11 +96,11 @@ function getCardElement(data) {
   cardImageElement.addEventListener("click", () => {
     modalImage.src = cardImageElement.src;
     modalCaption.textContent = data.name;
-    imageModal.classList.add("modal__image-container_opened");
+    imageModal.classList.add("modal_opened");
   });
 
   modalImageCloseButton.addEventListener("click", () => {
-    imageModal.classList.remove("modal__image-container_opened");
+    imageModal.classList.remove("modal_opened");
   });
 
   /* imageModal.addEventListener("click", (event) => {
