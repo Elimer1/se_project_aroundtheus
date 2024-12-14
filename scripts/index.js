@@ -45,9 +45,7 @@ const cardUrlInput = document.querySelector("#add-card-url-input");
 
 const newCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
-const addCardModalCloseButton = addCardModal.querySelector(
-  "#modal__close-button"
-);
+const addCardModalCloseButton = addCardModal.querySelector(".modal__close");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
@@ -55,16 +53,10 @@ const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
 const cardListElement = document.querySelector(".cards__list");
 
 const cardImage = document.querySelector(".card__image");
-const imageModal = document.querySelector(".image__modal");
+const imageModal = document.querySelector("#preview-modal");
 const modalImage = imageModal.querySelector(".modal__image");
-const modalImageCloseButton = imageModal.querySelector(".modal__close-button");
-
-//find  delete button
-//add event listener to delete button
-//cardElement.remove();
-
-//add click listener to the cardImage element
-//openModal with previewImageModal
+const modalImageCloseButton = imageModal.querySelector(".modal__close");
+const modalCaption = document.querySelector(".modal__caption");
 
 function closePopUp(modal) {
   modal.classList.remove("modal_opened");
@@ -102,10 +94,20 @@ function getCardElement(data) {
   });
 
   cardImageElement.addEventListener("click", () => {
-    console.log("ya");
     modalImage.src = cardImageElement.src;
-    imageModal.classList.add(".image__modal_opened");
+    modalCaption.textContent = data.name;
+    imageModal.classList.add("modal__image-container_opened");
   });
+
+  modalImageCloseButton.addEventListener("click", () => {
+    imageModal.classList.remove("modal__image-container_opened");
+  });
+
+  /* imageModal.addEventListener("click", (event) => {
+    if (event.target === imageModal) {
+      imageModal.classList.remove("image__modal_opened");
+    }
+  }); */
 
   cardImageElement.src = data.link;
   cardTitleElement.textContent = data.name;
@@ -141,10 +143,3 @@ addCardModalCloseButton.addEventListener("click", () => {
   closePopUp(addCardModal);
 });
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-
-/*cardImageEl.addEventListener("click", () => {
-  bigPictureImg.src = cardData.link;
-  bigPictureImg.alt = cardData.name;
-  bigPictureFooter.textContent = cardData.name;
-  openModal(bigPictureModal)
-});*/

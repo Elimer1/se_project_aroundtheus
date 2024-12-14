@@ -101,6 +101,32 @@
   margin-bottom: 48px;
 }
 
+.modal__image-container_opened {
+  display: flex;
+}
+
+.modal__image-content {
+  position: relative;
+}
+.modal__image {
+  max-width: 75vw;
+  max-height: 75vh;
+  object-fit: contain;
+  height: auto;
+}
+
+.modal__caption {
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  line-height: 14.52px;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  margin-top: 10px;
+  margin-right: auto;
+}
+
 @media screen and (max-width: 680px) {
   .modal__container {
     width: 282px;
