@@ -75,6 +75,7 @@ function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
+  closePopUp(profileEditModal);
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -127,10 +128,6 @@ profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent.trim();
   openModal(profileEditModal);
-});
-
-profileEditCloseButton.addEventListener("click", () => {
-  closePopUp(profileEditModal);
 });
 
 profileEditForm.addEventListener("submit", handleProfileFormSubmit);
