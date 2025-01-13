@@ -94,6 +94,15 @@ function getCardElement(data) {
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__delete-button");
 
+  document.addEventListener("click", (e) => {
+    const modals = document.querySelectorAll(".modal");
+    modals.forEach((modal) => {
+      if (e.target === modal && modal.classList.contains("modal_opened")) {
+        closePopUp(modal);
+      }
+    });
+  });
+
   deleteButton.addEventListener("click", () => {
     cardElement.remove();
   });
