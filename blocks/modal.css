@@ -65,6 +65,7 @@
   width: 358px;
   align-items: center;
   flex-grow: 1;
+  position: relative;
 }
 .modal__save-button {
   width: 358px;
@@ -97,6 +98,7 @@
   text-underline-position: from-font;
   text-decoration-skip-ink: none;
   padding: 0 0 13px 0;
+  position: relative;
 }
 
 .modal__input::placeholder {
@@ -129,10 +131,12 @@
 }
 
 .modal__error {
-  width: 164px;
-  height: 12px;
-  top: 338px;
-  left: 461px;
+  top: 40px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
   gap: 0px;
   opacity: 0px;
   color: #ff0000;
@@ -146,8 +150,11 @@
   margin: 0;
   padding: 0;
   visibility: hidden;
+  position: absolute;
 }
-
+.modal__label {
+  position: relative;
+gi}
 .modal__error_visible {
   visibility: visible;
 }
