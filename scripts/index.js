@@ -65,12 +65,23 @@ const closeButtons = document.querySelectorAll(".modal__close");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
+  document.addEventListener("click", closeByClickOutside);
   document.addEventListener("keydown", closeByEscape);
 }
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
+  document.removeEventListener("mousedown", closeByClickOutside);
   document.removeEventListener("keydown", closeByEscape);
+}
+
+function closeByClickOutside(e) {
+  const modals = document.querySelectorAll(".modal");
+  modals.forEach((modal) => {
+    if (e.target === modal && modal.classList.contains("modal_opened")) {
+      closeModal(modal);
+    }
+  });
 }
 
 function closeByEscape(evt) {
@@ -83,16 +94,9 @@ function closeByEscape(evt) {
 }
 
 closeButtons.forEach((button) => {
-  const modal = button.closest(".modal");
-  button.addEventListener("click", () => closeModal(modal));
-});
-
-document.addEventListener("click", (e) => {
-  const modals = document.querySelectorAll(".modal");
-  modals.forEach((modal) => {
-    if (e.target === modal && modal.classList.contains("modal_opened")) {
-      closeModal(modal);
-    }
+  button.addEventListener("mousedown", () => {
+    const modal = button.closest(".modal");
+    closeModal(modal);
   });
 });
 
@@ -127,7 +131,7 @@ function getCardElement(data) {
     likeButton.classList.toggle("card__like-button_active");
   });
 
-  cardImageElement.addEventListener("click", () => {
+  cardImageElement.addEventListener("mousedown", () => {
     modalImage.src = cardImageElement.src;
     modalImage.alt = data.name;
     modalCaption.textContent = data.name;
