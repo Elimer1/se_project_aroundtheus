@@ -41,6 +41,7 @@ const profileTitleInput = document.querySelector("#profile__title__input");
 const profileDescriptionInput = document.querySelector(
   "#profile__description__input"
 );
+
 const addCardFormElement = document.querySelector("#add-card-form");
 const cardTitleInput = document.querySelector("#add-card-title-input");
 const cardUrlInput = document.querySelector("#add-card-url-input");
@@ -48,6 +49,7 @@ const cardUrlInput = document.querySelector("#add-card-url-input");
 const newCardButton = document.querySelector(".profile__add-button");
 const addCardModal = document.querySelector("#add-card-modal");
 const addCardCloseButton = addCardModal.querySelector(".modal__close");
+
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
@@ -61,21 +63,44 @@ const modalImageCloseButton = imagePreviewModal.querySelector(".modal__close");
 const modalCaption = imagePreviewModal.querySelector(".modal__caption");
 const closeButtons = document.querySelectorAll(".modal__close");
 
+function openModal(modal) {
+  modal.classList.add("modal_opened");
+  document.addEventListener("keydown", closeByEscape);
+}
+
+function closeModal(modal) {
+  modal.classList.remove("modal_opened");
+  document.removeEventListener("keydown", closeByEscape);
+}
+
+function closeByEscape(evt) {
+  if (evt.key === "Escape") {
+    const openedModal = document.querySelector(".modal_opened");
+    if (openedModal) {
+      closeModal(openedModal);
+    }
+  }
+}
+
 closeButtons.forEach((button) => {
-  const popup = button.closest(".modal");
-  button.addEventListener("click", () => closePopUp(popup));
+  const modal = button.closest(".modal");
+  button.addEventListener("click", () => closeModal(modal));
 });
 
-function closePopUp(modal) {
-  modal.classList.remove("modal_opened");
-}
-console.log(cardTemplate);
+document.addEventListener("click", (e) => {
+  const modals = document.querySelectorAll(".modal");
+  modals.forEach((modal) => {
+    if (e.target === modal && modal.classList.contains("modal_opened")) {
+      closeModal(modal);
+    }
+  });
+});
 
 function handleProfileFormSubmit(evt) {
   evt.preventDefault();
   profileTitle.textContent = profileTitleInput.value;
   profileDescription.textContent = profileDescriptionInput.value;
-  closePopUp(profileEditModal);
+  closeModal(profileEditModal);
 }
 
 function handleAddCardFormSubmit(evt) {
@@ -83,7 +108,7 @@ function handleAddCardFormSubmit(evt) {
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
   renderCard({ name, link }, cardListElement);
-  closePopUp(addCardModal);
+  closeModal(addCardModal);
   addCardFormElement.reset();
 }
 
@@ -93,15 +118,6 @@ function getCardElement(data) {
   const cardTitleElement = cardElement.querySelector(".card__title");
   const likeButton = cardElement.querySelector(".card__like-button");
   const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  document.addEventListener("click", (e) => {
-    const modals = document.querySelectorAll(".modal");
-    modals.forEach((modal) => {
-      if (e.target === modal && modal.classList.contains("modal_opened")) {
-        closePopUp(modal);
-      }
-    });
-  });
 
   deleteButton.addEventListener("click", () => {
     cardElement.remove();
@@ -129,10 +145,6 @@ function renderCard(cardData, wrapper) {
   wrapper.prepend(cardElement);
 }
 
-function openModal(modal) {
-  modal.classList.add("modal_opened");
-}
-
 profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = profileTitle.textContent;
   profileDescriptionInput.value = profileDescription.textContent.trim();
@@ -141,8 +153,7 @@ profileEditButton.addEventListener("click", () => {
 
 profileEditForm.addEventListener("submit", handleProfileFormSubmit);
 
-initialCards.forEach((cardData) => renderCard(cardData, cardListElement));
-
 newCardButton.addEventListener("click", () => openModal(addCardModal));
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
+initialCards.forEach((cardData) => renderCard(cardData, cardListElement));
