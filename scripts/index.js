@@ -62,6 +62,7 @@ const modalImage = imagePreviewModal.querySelector(".modal__image");
 const modalImageCloseButton = imagePreviewModal.querySelector(".modal__close");
 const modalCaption = imagePreviewModal.querySelector(".modal__caption");
 const closeButtons = document.querySelectorAll(".modal__close");
+const modals = document.querySelectorAll(".modal");
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -71,12 +72,11 @@ function openModal(modal) {
 
 function closeModal(modal) {
   modal.classList.remove("modal_opened");
-  document.removeEventListener("mousedown", closeByClickOutside);
+  document.removeEventListener("click", closeByClickOutside);
   document.removeEventListener("keydown", closeByEscape);
 }
 
 function closeByClickOutside(e) {
-  const modals = document.querySelectorAll(".modal");
   modals.forEach((modal) => {
     if (e.target === modal && modal.classList.contains("modal_opened")) {
       closeModal(modal);
@@ -94,7 +94,7 @@ function closeByEscape(evt) {
 }
 
 closeButtons.forEach((button) => {
-  button.addEventListener("mousedown", () => {
+  button.addEventListener("click", () => {
     const modal = button.closest(".modal");
     closeModal(modal);
   });
