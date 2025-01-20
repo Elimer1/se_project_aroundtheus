@@ -131,7 +131,7 @@ function getCardElement(data) {
     likeButton.classList.toggle("card__like-button_active");
   });
 
-  cardImageElement.addEventListener("mousedown", () => {
+  cardImageElement.addEventListener("click", () => {
     modalImage.src = cardImageElement.src;
     modalImage.alt = data.name;
     modalCaption.textContent = data.name;
