@@ -1,5 +1,14 @@
 import Card from "../components/Card.js";
 import FormValidator from "../components/FormValidator.js";
+
+const validationSettings = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -41,6 +50,11 @@ function handleImageClick(data) {
 
 const cardListElement = document.querySelector(".cards__list");
 
+function createCard(cardData) {
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  return card.getView();
+}
+
 const profileEditButton = document.querySelector("#profile__edit-button");
 const profileEditModal = document.querySelector("#profile__edit-modal");
 const profileEditCloseButton = profileEditModal.querySelector(
@@ -54,7 +68,6 @@ const profileDescriptionInput = document.querySelector(
   "#profile__description__input"
 );
 
-const addCardFormElement = document.querySelector("#add-card-form");
 const cardTitleInput = document.querySelector("#add-card-title-input");
 const cardUrlInput = document.querySelector("#add-card-url-input");
 
@@ -65,7 +78,18 @@ const addCardCloseButton = addCardModal.querySelector(".modal__close");
 const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
+const addCardFormElement = document.querySelector("#add-card-form");
 const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
+const editFormValidator = new FormValidator(
+  validationSettings,
+  profileEditForm
+);
+const addFormValidator = new FormValidator(
+  validationSettings,
+  addCardFormElement
+);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 const cardImage = document.querySelector(".card__image");
 const imagePreviewModal = document.querySelector("#preview-modal");
@@ -74,24 +98,6 @@ const modalImageCloseButton = imagePreviewModal.querySelector(".modal__close");
 const modalCaption = imagePreviewModal.querySelector(".modal__caption");
 const closeButtons = document.querySelectorAll(".modal__close");
 const modals = document.querySelectorAll(".modal");
-
-const validationSettings = {
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
-const editFormElement = profileEditModal.querySelector(".modal__form");
-const addFormElement = addCardModal.querySelector(".modal__form");
-
-const editFormValidator = new FormValidator(
-  validationSettings,
-  editFormElement
-);
-const addFormValidator = new FormValidator(validationSettings, addFormElement);
-editFormValidator.enableValidation();
-addFormValidator.enableValidation();
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -140,11 +146,11 @@ function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  const newCard = new Card({ name, link }, "#card-template", handleImageClick);
-  cardListElement.prepend(newCard.getView());
+  const newCardElement = createCard({ name, link });
+  cardListElement.prepend(newCardElement);
   closeModal(addCardModal);
   addCardFormElement.reset();
-  addFormValidator._toggleButtonState();
+  addFormValidator.toggleButtonState();
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -159,6 +165,6 @@ newCardButton.addEventListener("click", () => openModal(addCardModal));
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
 initialCards.forEach((cardData) => {
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  cardListElement.appendChild(card.getView());
+  const cardElement = createCard(cardData);
+  cardListElement.appendChild(cardElement);
 });

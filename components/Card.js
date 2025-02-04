@@ -1,30 +1,3 @@
-const imagePreviewModal = document.querySelector("#preview-modal");
-const modalImage = imagePreviewModal.querySelector(".modal__image");
-const modalCaption = imagePreviewModal.querySelector(".modal__caption");
-const ESC_KEYCODE = 27;
-
-function closeModal(modal) {
-  modal.classList.remove("modal_opened");
-  document.removeEventListener("click", closeByClickOutside);
-  document.removeEventListener("keydown", closeByEscape);
-}
-function closeByClickOutside(e) {
-  modals.forEach((modal) => {
-    if (e.target === modal && modal.classList.contains("modal_opened")) {
-      closeModal(modal);
-    }
-  });
-}
-
-function closeByEscape(evt) {
-  if (evt.key === "Escape") {
-    const openedModal = document.querySelector(".modal_opened");
-    if (openedModal) {
-      closeModal(openedModal);
-    }
-  }
-}
-
 export default class Card {
   constructor({ name, link }, cardSelector, handleImageClick) {
     this._name = name;
@@ -62,9 +35,7 @@ export default class Card {
   }
 
   _handleLikeIcon() {
-    this._cardElement
-      .querySelector(".card__like-button")
-      .classList.toggle("card__like-button_active");
+    this._likeButton.classList.toggle("card__like-button_active");
   }
 
   _handleDeleteCard() {

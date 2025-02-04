@@ -82,8 +82,4 @@ const settings = {
   errorClass: "modal__error_visible",
 };
 
-//const editFormValidator = new FormValidator(settings, editForm);
-//editFormValidator.enableValidation();
-//const addFormValidator = new FormValidator(settings, addForm);
-
 export default FormValidator;
