@@ -150,7 +150,7 @@ function handleAddCardFormSubmit(evt) {
   cardListElement.prepend(newCardElement);
   closeModal(addCardModal);
   addCardFormElement.reset();
-  addFormValidator.toggleButtonState();
+  addFormValidator.updateButtonState();
 }
 
 profileEditButton.addEventListener("click", () => {
