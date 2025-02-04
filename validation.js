@@ -22,15 +22,15 @@ function checkInputValidity(formElement, inputElement, options) {
   hideInputError(formElement, inputElement, options);
 }
 
-function hasValidInput(inputList) {
-  return inputList.every((inputElement) => inputElement.validity.valid);
+function hasInvalidInput(inputList) {
+  return inputList.some((inputElement) => !inputElement.validity.valid);
 }
 
 //disable button add classes
 //enable button remove classes
 
 function toggleButtonState(inputElements, submitButton, options) {
-  if (!hasValidInput(inputElements)) {
+  if (!hasInvalidInput(inputElements)) {
     submitButton.classList.add(options.inactiveButtonClass);
     submitButton.disabled = true;
     return;

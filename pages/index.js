@@ -1,3 +1,5 @@
+import Card from "../components/Card.js";
+import FormValidator from "../components/FormValidator.js";
 const initialCards = [
   {
     name: "Yosemite Valley",
@@ -29,6 +31,16 @@ const initialCards = [
     link: "https://practicum-content.s3.us-west-1.amazonaws.com/software-engineer/around-project/lago.jpg",
   },
 ];
+
+function handleImageClick(data) {
+  modalImage.src = data.link;
+  modalImage.alt = data.name;
+  modalCaption.textContent = data.name;
+  openModal(imagePreviewModal);
+}
+
+const cardListElement = document.querySelector(".cards__list");
+
 const profileEditButton = document.querySelector("#profile__edit-button");
 const profileEditModal = document.querySelector("#profile__edit-modal");
 const profileEditCloseButton = profileEditModal.querySelector(
@@ -54,7 +66,6 @@ const cardTemplate =
   document.querySelector("#card-template").content.firstElementChild;
 
 const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
-const cardListElement = document.querySelector(".cards__list");
 
 const cardImage = document.querySelector(".card__image");
 const imagePreviewModal = document.querySelector("#preview-modal");
@@ -63,6 +74,24 @@ const modalImageCloseButton = imagePreviewModal.querySelector(".modal__close");
 const modalCaption = imagePreviewModal.querySelector(".modal__caption");
 const closeButtons = document.querySelectorAll(".modal__close");
 const modals = document.querySelectorAll(".modal");
+
+const validationSettings = {
+  inputSelector: ".modal__input",
+  submitButtonSelector: ".modal__button",
+  inactiveButtonClass: "modal__button_disabled",
+  inputErrorClass: "modal__input_type_error",
+  errorClass: "modal__error_visible",
+};
+const editFormElement = profileEditModal.querySelector(".modal__form");
+const addFormElement = addCardModal.querySelector(".modal__form");
+
+const editFormValidator = new FormValidator(
+  validationSettings,
+  editFormElement
+);
+const addFormValidator = new FormValidator(validationSettings, addFormElement);
+editFormValidator.enableValidation();
+addFormValidator.enableValidation();
 
 function openModal(modal) {
   modal.classList.add("modal_opened");
@@ -111,42 +140,11 @@ function handleAddCardFormSubmit(evt) {
   evt.preventDefault();
   const name = cardTitleInput.value;
   const link = cardUrlInput.value;
-  renderCard({ name, link }, cardListElement);
+  const newCard = new Card({ name, link }, "#card-template", handleImageClick);
+  cardListElement.prepend(newCard.getView());
   closeModal(addCardModal);
   addCardFormElement.reset();
-}
-
-function getCardElement(data) {
-  const cardElement = cardTemplate.cloneNode(true);
-  const cardImageElement = cardElement.querySelector(".card__image");
-  const cardTitleElement = cardElement.querySelector(".card__title");
-  const likeButton = cardElement.querySelector(".card__like-button");
-  const deleteButton = cardElement.querySelector(".card__delete-button");
-
-  deleteButton.addEventListener("click", () => {
-    cardElement.remove();
-  });
-
-  likeButton.addEventListener("click", () => {
-    likeButton.classList.toggle("card__like-button_active");
-  });
-
-  cardImageElement.addEventListener("click", () => {
-    modalImage.src = cardImageElement.src;
-    modalImage.alt = data.name;
-    modalCaption.textContent = data.name;
-    openModal(imagePreviewModal);
-  });
-
-  cardImageElement.src = data.link;
-  cardTitleElement.textContent = data.name;
-  cardImageElement.alt = data.name;
-  return cardElement;
-}
-
-function renderCard(cardData, wrapper) {
-  const cardElement = getCardElement(cardData);
-  wrapper.prepend(cardElement);
+  addFormValidator._toggleButtonState();
 }
 
 profileEditButton.addEventListener("click", () => {
@@ -160,4 +158,7 @@ profileEditForm.addEventListener("submit", handleProfileFormSubmit);
 newCardButton.addEventListener("click", () => openModal(addCardModal));
 
 addCardFormElement.addEventListener("submit", handleAddCardFormSubmit);
-initialCards.forEach((cardData) => renderCard(cardData, cardListElement));
+initialCards.forEach((cardData) => {
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  cardListElement.appendChild(card.getView());
+});

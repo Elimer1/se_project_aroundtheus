@@ -1,6 +1,6 @@
 # Project 3: Around The U.S.
 
-This is the third project of the Software Engineering program at Tripleten.This project was created with NTML and CSS based on a design on Figma and can adjust to different screen sizes.
+This is the third project of the Software Engineering program at Tripleten.This project was created with HTML CSS and JavaScript.The project displays the profile of someone along with his picture and beneath that displays cards with pictures and names of different places. The exisitng cards can be deleted and new cards can be added.In addition the profile title description and picture can be edited.
 
 ## Project features
 
@@ -12,15 +12,13 @@ This is the third project of the Software Engineering program at Tripleten.This 
 - CSS animation and transform
 - The Grid display
 - Media Queries
-
-## Plan on improving the project
-
-Id like to improve on this project by making the card along with description verticle on smaller screens. Id also lie to center the profiel on top and move the add button underneath the profile for all views.
+- Responsive Images
+- JavaScript Enhancements
+- Form Validation Enhancements
+- Modules
+- Exporting/Importing
+- Inheritance
 
 ## Github URL
 
 https://elimer1.github.io/se_project_aroundtheus/
-
-# video with project explanation
-
-https://drive.google.com/file/d/1zsVV5HHId_BiT6iJD6s414QyUeTuFE9Y/view?usp=drive_link
