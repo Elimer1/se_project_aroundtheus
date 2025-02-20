@@ -6,6 +6,7 @@ import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
 import { validationSettings, initialCards } from "../utils/constants..js";
 import Section from "../components/Section.js";
+import UserInfo from "../components/UserInfo.js";
 
 const cardListElement = document.querySelector(".cards__list");
 const imagePreviewModal = document.querySelector("#preview-modal");
@@ -21,6 +22,11 @@ const addCardModal = document.querySelector("#add-card-modal");
 const addCardFormElement = document.querySelector("#add-card-form");
 const profileEditModal = document.querySelector("#profile__edit-modal");
 const profileEditForm = profileEditModal.querySelector("#edit-profile-form");
+
+const userInfo = new UserInfo({
+  nameSelector: "#profile__title",
+  jobSelector: "#profile__description",
+});
 
 const section = new Section(
   { items: initialCards, renderer: createCard },
@@ -42,9 +48,10 @@ function createCard(cardData) {
 }
 
 const handleProfileFormSubmit = (data) => {
-  console.log("Form data:", data);
-  profileTitle.textContent = data["edit-profile"];
-  profileDescription.textContent = data["profile-description"];
+  userInfo.setUserInfo({
+    name: data["edit-profile"],
+    job: data["profile-description"],
+  });
   profileEditPopup.close();
 };
 
@@ -55,8 +62,9 @@ const profileEditPopup = new PopupWithForm(
 profileEditPopup.setEventListeners();
 
 profileEditButton.addEventListener("click", () => {
-  profileTitleInput.value = profileTitle.textContent;
-  profileDescriptionInput.value = profileDescription.textContent.trim();
+  const currentUserInfo = userInfo.getUserInfo();
+  profileTitleInput.value = currentUserInfo.name;
+  profileDescriptionInput.value = currentUserInfo.job;
   profileEditPopup.open();
 });
 
