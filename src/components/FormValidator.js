@@ -1,4 +1,4 @@
-class FormValidator {
+export default class FormValidator {
   constructor(settings, formElement) {
     this._form = formElement;
     this._inputSelector = settings.inputSelector;
@@ -65,6 +65,13 @@ class FormValidator {
     this._buttonElement.disabled = false;
   }
 
+  resetValidation() {
+    this._inputList.forEach((inputElement) => {
+      this._hideInputError(inputElement); // Clear error messages
+    });
+    this.toggleButtonState(); // Update button state without showing errors
+  }
+
   enableValidation() {
     this._form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -81,5 +88,3 @@ const settings = {
   inputErrorClass: "modal__input_type_error",
   errorClass: "modal__error_visible",
 };
-
-export default FormValidator;

@@ -4,7 +4,7 @@ import "../pages/index.css";
 import Popup from "../components/Popup.js";
 import { PopupWithImage } from "../components/PopupWithImage.js";
 import { PopupWithForm } from "../components/PopupWithForm.js";
-import { validationSettings, initialCards } from "../utils/constants..js";
+import { validationSettings, initialCards } from "../utils/constants.js";
 import Section from "../components/Section.js";
 import UserInfo from "../components/UserInfo.js";
 
@@ -80,7 +80,10 @@ const addCardPopup = new PopupWithForm(
 );
 addCardPopup.setEventListeners();
 
-newCardButton.addEventListener("click", () => addCardPopup.open());
+newCardButton.addEventListener("click", () => {
+  addCardPopup.open();
+  addFormValidator.resetValidation();
+});
 
 const editFormValidator = new FormValidator(
   validationSettings,
