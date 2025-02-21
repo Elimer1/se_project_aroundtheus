@@ -8,7 +8,6 @@ export class PopupWithForm extends Popup {
   }
 
   close() {
-    this._modalForm.reset();
     super.close();
   }
 

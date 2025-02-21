@@ -33,57 +33,17 @@ const section = new Section(
   ".cards__list"
 );
 
-section.renderItems();
-
-function handleImageClick(data) {
-  const imagePopup = new PopupWithImage("#preview-modal");
-  imagePopup.open(data);
-  imagePopup.setEventListeners();
-}
-
-function createCard(cardData) {
-  const card = new Card(cardData, "#card-template", handleImageClick);
-  const element = card.getView();
-  return element;
-}
-
-const handleProfileFormSubmit = (data) => {
-  userInfo.setUserInfo({
-    name: data["edit-profile"],
-    job: data["profile-description"],
-  });
-  profileEditPopup.close();
-};
+const imagePopup = new PopupWithImage("#preview-modal");
 
 const profileEditPopup = new PopupWithForm(
   "#profile__edit-modal",
   handleProfileFormSubmit
 );
-profileEditPopup.setEventListeners();
-
-profileEditButton.addEventListener("click", () => {
-  const currentUserInfo = userInfo.getUserInfo();
-  profileTitleInput.value = currentUserInfo.name;
-  profileDescriptionInput.value = currentUserInfo.job;
-  profileEditPopup.open();
-});
-
-const handleAddCardFormSubmit = (data) => {
-  const newCardElement = createCard({ name: data.title, link: data.url });
-  section.addItem(newCardElement);
-  addCardPopup.close();
-};
 
 const addCardPopup = new PopupWithForm(
   "#add-card-modal",
   handleAddCardFormSubmit
 );
-addCardPopup.setEventListeners();
-
-newCardButton.addEventListener("click", () => {
-  addCardPopup.open();
-  addFormValidator.resetValidation();
-});
 
 const editFormValidator = new FormValidator(
   validationSettings,
@@ -93,5 +53,47 @@ const addFormValidator = new FormValidator(
   validationSettings,
   addCardFormElement
 );
+
+section.renderItems();
+profileEditPopup.setEventListeners();
+addCardPopup.setEventListeners();
 editFormValidator.enableValidation();
 addFormValidator.enableValidation();
+imagePopup.setEventListeners();
+
+function handleImageClick(data) {
+  imagePopup.open(data);
+}
+
+function createCard(cardData) {
+  const card = new Card(cardData, "#card-template", handleImageClick);
+  const element = card.getView();
+  return element;
+}
+
+function handleProfileFormSubmit(data) {
+  userInfo.setUserInfo({
+    name: data["edit-profile"],
+    job: data["profile-description"],
+  });
+  profileEditPopup.close();
+}
+
+function handleAddCardFormSubmit(data) {
+  const newCardElement = createCard({ name: data.title, link: data.url });
+  section.addItem(newCardElement);
+  addCardFormElement.reset();
+  addFormValidator.resetValidation();
+  addCardPopup.close();
+}
+
+profileEditButton.addEventListener("click", () => {
+  const currentUserInfo = userInfo.getUserInfo();
+  profileTitleInput.value = currentUserInfo.name;
+  profileDescriptionInput.value = currentUserInfo.job;
+  profileEditPopup.open();
+});
+
+newCardButton.addEventListener("click", () => {
+  addCardPopup.open();
+});
