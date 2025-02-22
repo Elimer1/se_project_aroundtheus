@@ -45,7 +45,7 @@ export default class FormValidator {
       this._form.querySelectorAll(this._inputSelector)
     );
     this._buttonElement = this._form.querySelector(this._submitButtonSelector);
-    this.toggleButtonState(); //checking input when form opens
+    this.toggleButtonState();
 
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
@@ -67,9 +67,14 @@ export default class FormValidator {
 
   resetValidation() {
     this._inputList.forEach((inputElement) => {
-      this._hideInputError(inputElement); // Clear error messages
+      this._hideInputError(inputElement);
     });
-    this.toggleButtonState(); // Update button state without showing errors
+    this.toggleButtonState();
+  }
+
+  disableButton() {
+    this._buttonElement.classList.add(this._inactiveButtonClass);
+    this._buttonElement.disabled = true;
   }
 
   enableValidation() {

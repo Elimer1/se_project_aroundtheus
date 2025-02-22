@@ -83,7 +83,7 @@ function handleAddCardFormSubmit(data) {
   const newCardElement = createCard({ name: data.title, link: data.url });
   section.addItem(newCardElement);
   addCardFormElement.reset();
-  addFormValidator.resetValidation();
+  addFormValidator.disableButton();
   addCardPopup.close();
 }
 
@@ -91,9 +91,11 @@ profileEditButton.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   profileTitleInput.value = currentUserInfo.name;
   profileDescriptionInput.value = currentUserInfo.job;
+  editFormValidator.resetValidation();
   profileEditPopup.open();
 });
 
 newCardButton.addEventListener("click", () => {
   addCardPopup.open();
+  addFormValidator.disableButton();
 });

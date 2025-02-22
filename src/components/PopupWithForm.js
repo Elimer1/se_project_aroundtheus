@@ -7,10 +7,6 @@ export class PopupWithForm extends Popup {
     this._handleFormSubmit = handleFormSubmit;
   }
 
-  close() {
-    super.close();
-  }
-
   _getInputValues() {
     const formValues = {};
     this._inputList.forEach((input) => {
