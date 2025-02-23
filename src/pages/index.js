@@ -97,5 +97,4 @@ profileEditButton.addEventListener("click", () => {
 
 newCardButton.addEventListener("click", () => {
   addCardPopup.open();
-  addFormValidator.disableButton();
 });
