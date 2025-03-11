@@ -52,6 +52,7 @@
   cursor: pointer;
 }
 .card__delete-button {
+  display: block;
   position: absolute;
   background: transparent url("../images/Trash\ \(1\).svg") center no-repeat;
   width: 18px;
@@ -59,10 +60,10 @@
   top: 18px;
   right: 15px;
   gap: 0px;
-  opacity: 0;
+  opacity: 0.8;
   border: none;
 }
 .card__delete-button:hover {
-  opacity: 0.6;
+  opacity: 1;
   cursor: pointer;
 }

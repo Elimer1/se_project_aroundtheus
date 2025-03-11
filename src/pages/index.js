@@ -29,6 +29,12 @@ const avatarEditModal = document.querySelector("#avatar-edit-modal");
 const avatarEditForm = avatarEditModal.querySelector("#edit-avatar-form");
 const avatarInput = avatarEditModal.querySelector("#avatar-url-input");
 const avatarSubmitButton = avatarEditModal.querySelector(".modal__save-button");
+const profileEditSaveButton = profileEditForm.querySelector(
+  ".modal__save-button"
+);
+const addCardSaveButton = addCardFormElement.querySelector(
+  ".modal__save-button"
+);
 
 const api = new Api({
   baseUrl: "https://around-api.en.tripleten-services.com/v1",
@@ -79,33 +85,22 @@ function createCard(cardData) {
       name: cardData.name,
       link: sanitizedLink,
       _id: cardData._id || null,
+      isLiked: cardData.isLiked !== undefined ? cardData.isLiked : false,
     },
     "#card-template",
+    api,
     handleImageClick,
-    handleDeleteClick,
-    handleLikeClick
+    handleDeleteClick
   );
 
   const element = card.getView();
-  if (!cardData._id) {
-    console.warn("Card created with no _id, deletion might fail:", cardData);
-  } else {
-    const initialIsLiked =
-      cardData.isLiked !== undefined ? cardData.isLiked : false;
-    likeStatuses.set(cardData._id, initialIsLiked);
-    const likeButton = element.querySelector(".card__like-button");
-    if (likeButton) {
-      likeButton.classList.toggle("card__like-button_active", initialIsLiked);
-    }
-  }
   return element;
 }
 
 function handleProfileFormSubmit(data) {
-  const saveButton = profileEditForm.querySelector(".modal__save-button");
-  saveButton.textContent = "Saving...";
-  saveButton.classList.add("loading");
-  saveButton.disabled = true;
+  profileEditSaveButton.textContent = "Saving...";
+  profileEditSaveButton.classList.add("loading");
+  profileEditSaveButton.disabled = true;
   api
     .updateUserInfo(data["edit-profile"], data["profile-description"])
     .then((updatedInfo) => {
@@ -120,18 +115,17 @@ function handleProfileFormSubmit(data) {
       console.error("Error updating user info:", err);
     })
     .finally(() => {
-      saveButton.textContent = "Save";
-      saveButton.classList.remove("loading");
-      saveButton.disabled = false;
+      profileEditSaveButton.textContent = "Save";
+      profileEditSaveButton.classList.remove("loading");
+      profileEditSaveButton.disabled = false;
     });
 }
 
 function handleAddCardFormSubmit(data) {
+  addCardSaveButton.textContent = "Saving...";
+  addCardSaveButton.classList.add("loading");
+  addCardSaveButton.disabled = true;
   const sanitizedUrl = data.url.replace(/["'\s]+$/, "").trim();
-  const saveButton = addCardFormElement.querySelector(".modal__save-button");
-  saveButton.textContent = "Saving...";
-  saveButton.classList.add("loading");
-  saveButton.disabled = true;
   api
     .addCard(data.title, sanitizedUrl)
     .then((newCardInfo) => {
@@ -149,10 +143,9 @@ function handleAddCardFormSubmit(data) {
       console.error("Error adding new card:", err);
     })
     .finally(() => {
-      saveButton.textContent = "Save";
-      saveButton.classList.remove("loading");
-      saveButton.disabled = false;
-      addCardPopup.close();
+      addCardSaveButton.textContent = "Save";
+      addCardSaveButton.classList.remove("loading");
+      addCardSaveButton.disabled = false;
     });
 }
 
@@ -165,7 +158,6 @@ function handleDeleteConfirm(data) {
       "Data:",
       data
     );
-    deleteCardPopup.close();
     return;
   }
   api
@@ -176,31 +168,6 @@ function handleDeleteConfirm(data) {
     })
     .catch((err) => {
       console.error("Error deleting card:", err);
-      deleteCardPopup.close();
-    });
-}
-
-const likeStatuses = new Map();
-
-function handleLikeClick(cardId) {
-  const currentIsLiked = likeStatuses.get(cardId) || false;
-  api
-    .toggleLike(cardId, currentIsLiked)
-    .then((updatedCard) => {
-      likeStatuses.set(cardId, updatedCard.isLiked);
-      const cardElement = document.querySelector(`.card[data-id="${cardId}"]`);
-      if (cardElement) {
-        const likeButton = cardElement.querySelector(".card__like-button");
-        if (likeButton) {
-          likeButton.classList.toggle(
-            "card__like-button_active",
-            updatedCard.isLiked
-          );
-        }
-      }
-    })
-    .catch((err) => {
-      console.error("Error toggling like:", err);
     });
 }
 
@@ -233,7 +200,7 @@ avatarEditButton.addEventListener("click", () => {
   avatarInput.value = currentUserInfo.avatar || "";
   avatarEditPopup.open();
   avatarFormValidator.resetValidation();
-  avatarFormValidator.toggleButtonState();
+  avatarFormValidator.enableValidation();
 });
 
 const imagePopup = new PopupWithImage("#preview-modal");
@@ -289,19 +256,19 @@ avatarEditPopup.setEventListeners();
 profileEditPopup.setEventListeners();
 addCardPopup.setEventListeners();
 deleteCardPopup.setEventListeners();
-editFormValidator.enableValidation();
-addFormValidator.enableValidation();
 imagePopup.setEventListeners();
-avatarFormValidator.enableValidation();
 
 profileEditButton.addEventListener("click", () => {
   const currentUserInfo = userInfo.getUserInfo();
   profileTitleInput.value = currentUserInfo.name;
   profileDescriptionInput.value = currentUserInfo.about;
   editFormValidator.resetValidation();
+  editFormValidator.enableValidation();
   profileEditPopup.open();
 });
 
 newCardButton.addEventListener("click", () => {
+  addFormValidator.resetValidation(); // Add this to clear previous errors
+  addFormValidator.enableValidation();
   addCardPopup.open();
 });
