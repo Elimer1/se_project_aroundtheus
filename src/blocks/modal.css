@@ -55,8 +55,6 @@
   font-weight: 900;
   line-height: 29px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   margin: 0 28px 54px 0;
   margin-right: auto;
 }
@@ -78,8 +76,6 @@
   font-weight: 400;
   line-height: 22px;
   text-align: center;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   padding: 0 0 0 0;
   margin-top: auto;
 }
@@ -96,8 +92,6 @@
   font-weight: 400;
   line-height: 17px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   padding: 0 0 13px 0;
   position: relative;
 }
@@ -125,8 +119,6 @@
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   margin-top: 10px;
   margin-right: auto;
 }
@@ -146,8 +138,6 @@
   font-weight: 400;
   line-height: 14.52px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   margin: 0;
   padding: 0;
   visibility: hidden;
@@ -165,17 +155,67 @@
   border-bottom: 1px solid #ff0000;
 }
 
-.modal__save-button_disabled {
-  background-color: #d3d3d3;
-  color: #a1a1a1;
-  cursor: not-allowed;
-}
-
 .modal__button_disabled {
   background-color: white;
   color: #000;
   border-color: #000;
   opacity: 20%;
+  cursor: not-allowed;
+}
+
+.modal__container_delete {
+  width: 430px;
+  height: 181px;
+  padding: 95px 36px 36px;
+  position: relative;
+}
+
+.modal__heading_delete {
+  width: 358px;
+  height: 23px;
+  position: absolute;
+  top: 34px;
+  left: 36px;
+  font-family: Inter;
+  font-weight: 900;
+  font-size: 24px;
+  line-height: 29.05px;
+  margin: 0;
+  color: #000;
+}
+
+.modal__confirm-button {
+  width: 358px;
+  height: 50px;
+  position: absolute;
+  top: 95px;
+  left: 36px;
+  border-radius: 2px;
+  background-color: black;
+  color: white;
+  font-family: "Inter", "Arial", sans-serif;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 22px;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+}
+
+.modal__confirm-button:hover {
+  opacity: 0.8;
+}
+
+.modal__close_delete {
+  position: absolute;
+  top: -45px;
+  right: -45px;
+}
+
+.modal__save-button.loading {
+  opacity: 0.7;
   cursor: not-allowed;
 }
 
@@ -222,5 +262,37 @@
   .modal__error {
     width: 238px;
     top: 20px;
+  }
+
+  .modal__container_delete {
+    width: 90%;
+    max-width: 320px;
+    padding: 20px 15px;
+    border-radius: 8px;
+  }
+
+  .modal__close_delete {
+    top: -25px;
+    right: -25px;
+    width: 28px;
+    height: 28px;
+  }
+
+  .modal__heading_delete {
+    font-size: 30px;
+    margin-top: 15px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .modal__confirm-button {
+    width: 100%;
+    max-width: 280px;
+    height: 50px;
+    position: static;
+    left: auto;
+    margin-top: 185px;
+    font-size: 16px;
+    padding: 0 20px;
   }
 }

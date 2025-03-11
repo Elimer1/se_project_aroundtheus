@@ -5,8 +5,8 @@ export default class Section {
     this._container = document.querySelector(selector);
   }
 
-  renderItems() {
-    this._items.forEach((item) => {
+  renderItems(items) {
+    items.reverse().forEach((item) => {
       const cardElement = this._renderer(item);
       this._container.prepend(cardElement);
     });
@@ -14,5 +14,14 @@ export default class Section {
 
   addItem(element) {
     this._container.prepend(element);
+  }
+
+  removeItem(cardId) {
+    const cardElement = this._container.querySelector(
+      `.card[data-id="${cardId}"]`
+    );
+    if (cardElement) {
+      cardElement.remove();
+    }
   }
 }

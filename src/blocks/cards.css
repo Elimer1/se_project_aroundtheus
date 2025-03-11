@@ -11,6 +11,12 @@
   list-style-type: none;
   border-radius: 10px;
 }
+
+.card--error {
+  opacity: 0.5;
+  border: 2px dashed red;
+}
+
 @media screen and (max-width: 680px) {
   .cards {
     margin-top: 36px;

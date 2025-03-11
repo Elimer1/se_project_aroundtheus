@@ -1,10 +1,20 @@
 export default class Card {
-  constructor({ name, link }, cardSelector, handleImageClick) {
+  constructor(
+    { name, link, _id = null },
+    cardSelector,
+    handleImageClick,
+    handleDeleteClick,
+    handleLikeClick
+  ) {
     this._name = name;
     this._link = link;
+    this._id = _id;
     this._cardSelector = cardSelector;
     this._handleImageClick = handleImageClick;
+    this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
   }
+
   _getTemplate() {
     return document
       .querySelector(this._cardSelector)
@@ -19,7 +29,16 @@ export default class Card {
       });
 
       this._deleteButton.addEventListener("click", () => {
-        this._handleDeleteCard();
+        const dataId = this._cardElement?.dataset.id;
+        if (!dataId || typeof dataId !== "string") {
+          console.error("No valid data-id found for deletion:", {
+            dataId,
+            thisId: this._id,
+            cardElement: this._cardElement,
+          });
+          return;
+        }
+        this._handleDeleteClick(dataId);
       });
 
       this._cardImageElement.addEventListener("click", () => {
@@ -35,7 +54,7 @@ export default class Card {
   }
 
   _handleLikeIcon() {
-    this._likeButton.classList.toggle("card__like-button_active");
+    this._handleLikeClick(this._id);
   }
 
   _handleDeleteCard() {
@@ -56,6 +75,7 @@ export default class Card {
     this._cardImageElement.alt = this._name;
     cardTitleElement.textContent = this._name;
 
+    this._cardElement.dataset.id = this._id;
     this._setEventListeners();
     return this._cardElement;
   }

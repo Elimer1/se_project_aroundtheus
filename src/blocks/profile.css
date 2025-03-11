@@ -24,8 +24,6 @@
   font-weight: 500;
   line-height: 48px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   grid-area: title;
   margin: 0;
   text-overflow: ellipsis;
@@ -39,8 +37,6 @@
   font-weight: 400;
   line-height: 21.78px;
   text-align: left;
-  text-underline-position: from-font;
-  text-decoration-skip-ink: none;
   grid-area: description;
   margin: 0;
   text-overflow: ellipsis;
@@ -69,6 +65,32 @@
 .profile__add-button:hover {
   opacity: 0.6;
   cursor: pointer;
+}
+
+.profile__avatar-container {
+  position: relative;
+}
+
+.profile__avatar-edit-button {
+  background: transparent url(../images/edit-avatar-button2.svg) center
+    no-repeat;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border: none;
+  border-radius: 50%;
+  padding: 0;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  height: 100%;
+  width: 100%;
+}
+
+.profile__avatar-container:hover .profile__avatar-edit-button {
+  opacity: 1;
 }
 
 @media screen and (max-width: 680px) {
@@ -116,5 +138,10 @@
     margin-bottom: 36px;
     width: 100%;
     margin: auto;
+  }
+
+  .profile__avatar-edit-button {
+    font-size: 10px;
+    padding: 6px;
   }
 }
