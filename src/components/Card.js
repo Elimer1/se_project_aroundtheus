@@ -90,6 +90,11 @@ export default class Card {
     return this._isLiked;
   }
 
+  toggleLike() {
+    const newLikeState = !this._isLiked;
+    this.setLikeState(newLikeState);
+  }
+
   getView() {
     this._updateLikeButton();
     this._setEventListeners();
