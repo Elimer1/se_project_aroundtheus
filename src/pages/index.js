@@ -268,7 +268,7 @@ profileEditButton.addEventListener("click", () => {
 });
 
 newCardButton.addEventListener("click", () => {
-  addFormValidator.resetValidation(); // Add this to clear previous errors
+  addFormValidator.resetValidation();
   addFormValidator.enableValidation();
   addCardPopup.open();
 });
