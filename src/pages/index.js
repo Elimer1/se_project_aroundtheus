@@ -63,6 +63,7 @@ const addFormValidator = new FormValidator(
   validationSettings,
   addCardFormElement
 );
+addFormValidator.enableValidation();
 
 function handleDeleteClick(cardId) {
   if (!cardId || typeof cardId !== "string") {
@@ -280,7 +281,5 @@ profileEditButton.addEventListener("click", () => {
 });
 
 newCardButton.addEventListener("click", () => {
-  addFormValidator.resetValidation();
-  addFormValidator.enableValidation();
   addCardPopup.open();
 });
