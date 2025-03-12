@@ -90,7 +90,8 @@ function createCard(cardData) {
     "#card-template",
     api,
     handleImageClick,
-    handleDeleteClick
+    handleDeleteClick,
+    handleLikeClick
   );
 
   const element = card.getView();
@@ -120,6 +121,17 @@ function handleProfileFormSubmit(data) {
       profileEditSaveButton.disabled = false;
     });
 }
+
+const handleLikeClick = (card) => {
+  api
+    .toggleLike(card.getId(), card.isLiked())
+    .then(() => {
+      card.updateLikesView();
+    })
+    .catch((err) =>
+      console.error(`An error occurred when changing like status: ${err}`)
+    );
+};
 
 function handleAddCardFormSubmit(data) {
   addCardSaveButton.textContent = "Saving...";

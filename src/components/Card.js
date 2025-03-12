@@ -13,7 +13,8 @@ export default class Card {
     cardSelector,
     api,
     handleImageClick,
-    handleDeleteClick
+    handleDeleteClick,
+    handleLikeClick
   ) {
     this._name = name;
     this._link = link;
@@ -23,6 +24,7 @@ export default class Card {
     this._isLiked = isLiked;
     this._handleImageClick = handleImageClick;
     this._handleDeleteClick = handleDeleteClick;
+    this._handleLikeClick = handleLikeClick;
 
     this._cardElement = this._getTemplate();
     this._cardImageElement = this._cardElement.querySelector(
@@ -53,7 +55,7 @@ export default class Card {
 
   _setEventListeners() {
     this._likeButton.addEventListener("click", () => {
-      this.toggleLike();
+      this._handleLikeClick(this);
     });
 
     this._deleteButton.addEventListener("click", () => {
@@ -99,5 +101,25 @@ export default class Card {
     this._updateLikeButton();
     this._setEventListeners();
     return this._cardElement;
+  }
+
+  _updateLikesView() {
+    if (this.isLiked()) {
+      this._likeButton.classList.add("card__like-button_active");
+    } else {
+      this._likeButton.classList.remove("card__like-button_active");
+    }
+  }
+
+  getId() {
+    return this._id;
+  }
+
+  isLiked() {
+    return this._isLiked;
+  }
+
+  updateLikesView() {
+    this._likeButton.classList.toggle("card__like-button_active");
   }
 }
