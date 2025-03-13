@@ -63,6 +63,9 @@ const addFormValidator = new FormValidator(
   validationSettings,
   addCardFormElement
 );
+
+avatarFormValidator.enableValidation();
+editFormValidator.enableValidation();
 addFormValidator.enableValidation();
 
 function handleDeleteClick(cardId) {
@@ -112,14 +115,12 @@ function handleProfileFormSubmit(data) {
         avatar: updatedInfo.avatar,
       });
       profileEditPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error updating user info:", err);
-    })
-    .finally(() => {
       profileEditSaveButton.textContent = "Save";
       profileEditSaveButton.classList.remove("loading");
       profileEditSaveButton.disabled = false;
+    })
+    .catch((err) => {
+      console.error("Error updating user info:", err);
     });
 }
 
@@ -151,14 +152,12 @@ function handleAddCardFormSubmit(data) {
       addCardFormElement.reset();
       addFormValidator.resetValidation();
       addCardPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error adding new card:", err);
-    })
-    .finally(() => {
       addCardSaveButton.textContent = "Save";
       addCardSaveButton.classList.remove("loading");
       addCardSaveButton.disabled = false;
+    })
+    .catch((err) => {
+      console.error("Error adding new card:", err);
     });
 }
 
@@ -197,14 +196,12 @@ function handleAvatarFormSubmit(data) {
         avatar: updatedInfo.avatar,
       });
       avatarEditPopup.close();
-    })
-    .catch((err) => {
-      console.error("Error updating avatar", err);
-    })
-    .finally(() => {
       avatarSubmitButton.textContent = "Save";
       avatarSubmitButton.classList.remove("loading");
       avatarSubmitButton.disabled = false;
+    })
+    .catch((err) => {
+      console.error("Error updating avatar", err);
     });
 }
 
@@ -213,7 +210,6 @@ avatarEditButton.addEventListener("click", () => {
   avatarInput.value = currentUserInfo.avatar || "";
   avatarEditPopup.open();
   avatarFormValidator.resetValidation();
-  avatarFormValidator.enableValidation();
 });
 
 const imagePopup = new PopupWithImage("#preview-modal");
@@ -276,7 +272,6 @@ profileEditButton.addEventListener("click", () => {
   profileTitleInput.value = currentUserInfo.name;
   profileDescriptionInput.value = currentUserInfo.about;
   editFormValidator.resetValidation();
-  editFormValidator.enableValidation();
   profileEditPopup.open();
 });
 
