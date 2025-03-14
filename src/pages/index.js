@@ -115,12 +115,14 @@ function handleProfileFormSubmit(data) {
         avatar: updatedInfo.avatar,
       });
       profileEditPopup.close();
-      profileEditSaveButton.textContent = "Save";
-      profileEditSaveButton.classList.remove("loading");
-      profileEditSaveButton.disabled = false;
     })
     .catch((err) => {
       console.error("Error updating user info:", err);
+    })
+    .finally(() => {
+      profileEditSaveButton.textContent = "Save";
+      profileEditSaveButton.classList.remove("loading");
+      profileEditSaveButton.disabled = false;
     });
 }
 
@@ -150,14 +152,16 @@ function handleAddCardFormSubmit(data) {
       });
       section.addItem(newCardElement);
       addCardFormElement.reset();
-      addFormValidator.resetValidation();
+      addFormValidator.toggleButtonState();
       addCardPopup.close();
-      addCardSaveButton.textContent = "Save";
-      addCardSaveButton.classList.remove("loading");
-      addCardSaveButton.disabled = false;
     })
     .catch((err) => {
       console.error("Error adding new card:", err);
+    })
+    .finally(() => {
+      addCardSaveButton.textContent = "Save";
+      addCardSaveButton.classList.remove("loading");
+      addCardSaveButton.disabled = false;
     });
 }
 
@@ -196,12 +200,14 @@ function handleAvatarFormSubmit(data) {
         avatar: updatedInfo.avatar,
       });
       avatarEditPopup.close();
-      avatarSubmitButton.textContent = "Save";
-      avatarSubmitButton.classList.remove("loading");
-      avatarSubmitButton.disabled = false;
     })
     .catch((err) => {
       console.error("Error updating avatar", err);
+    })
+    .finally(() => {
+      avatarSubmitButton.textContent = "Save";
+      avatarSubmitButton.classList.remove("loading");
+      avatarSubmitButton.disabled = false;
     });
 }
 
