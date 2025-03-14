@@ -18,6 +18,10 @@ This is the third project of the Software Engineering program at Tripleten.This 
 - Modules
 - Exporting/Importing
 - Inheritance
+- Asynchronous Programming
+- Webpack
+- API Integration
+- Git
 
 ## Github URL
 

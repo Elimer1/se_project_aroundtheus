@@ -6,6 +6,10 @@ export default class FormValidator {
     this._inactiveButtonClass = settings.inactiveButtonClass;
     this._inputErrorClass = settings.inputErrorClass;
     this._errorClass = settings.errorClass;
+    this._inputList = Array.from(
+      this._form.querySelectorAll(this._inputSelector)
+    );
+    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
   }
 
   _showInputError(inputElement, errorMessage) {
@@ -35,18 +39,24 @@ export default class FormValidator {
   }
 
   _hasInvalidInput() {
-    return this._inputList.some((inputElement) => {
-      return !inputElement.validity.valid;
+    const result = this._inputList.some((inputElement) => {
+      const isEmptyRequired =
+        inputElement.hasAttribute("required") && !inputElement.value.trim();
+      const isInvalid =
+        !inputElement.validity.valid || inputElement.validity.typeMismatch;
+      const isUrlInvalid =
+        inputElement.type === "url" &&
+        inputElement.value.trim() &&
+        !/^(https?:\/\/)?([\w-]+(\.[\w-]+)+)([\w.,@?^=%&:/~+#-]*[\w@?^=%&/~+#-])?$/.test(
+          inputElement.value.trim()
+        );
+
+      return isEmptyRequired || isInvalid || isUrlInvalid;
     });
+    return result;
   }
 
   _setEventListeners() {
-    this._inputList = Array.from(
-      this._form.querySelectorAll(this._inputSelector)
-    );
-    this._buttonElement = this._form.querySelector(this._submitButtonSelector);
-    this.toggleButtonState();
-
     this._inputList.forEach((inputElement) => {
       inputElement.addEventListener("input", () => {
         this._checkInputValidity(inputElement);
@@ -56,8 +66,14 @@ export default class FormValidator {
   }
 
   toggleButtonState() {
-    if (this._hasInvalidInput()) {
-      this.disableButton();
+    const hasInvalidInput = this._hasInvalidInput();
+    if (!this._buttonElement) {
+      console.error(`Button element not found for form ${this._form.id}`);
+      return;
+    }
+    if (hasInvalidInput) {
+      this._buttonElement.classList.add(this._inactiveButtonClass);
+      this._buttonElement.disabled = true;
     } else {
       this._buttonElement.classList.remove(this._inactiveButtonClass);
       this._buttonElement.disabled = false;
@@ -71,24 +87,11 @@ export default class FormValidator {
     this.toggleButtonState();
   }
 
-  disableButton() {
-    this._buttonElement.classList.add(this._inactiveButtonClass);
-    this._buttonElement.disabled = true;
-  }
-
   enableValidation() {
     this._form.addEventListener("submit", (e) => {
       e.preventDefault();
     });
     this._setEventListeners();
+    this.toggleButtonState();
   }
 }
-
-const settings = {
-  formSelector: ".modal__form",
-  inputSelector: ".modal__input",
-  submitButtonSelector: ".modal__button",
-  inactiveButtonClass: "modal__button_disabled",
-  inputErrorClass: "modal__input_type_error",
-  errorClass: "modal__error_visible",
-};
